@@ -1,0 +1,421 @@
+/* ui-ux-craft · starter tokens
+ * Use ONLY when the project has no design system (or DESIGN.md). Otherwise map these rules onto the existing tokens.
+ * Tiers: primitives (--p-*) → semantic (--color-*, --space-*, …). Two tiers by default; add component tokens
+ * only when one semantic role must render differently per component (Figma token architecture).
+ * Semantic tokens reference primitives (or literal values) directly, never another semantic token: no alias chains.
+ * Colour is OKLCH: every hue ramp shares one lightness curve so step N has similar contrast across hues
+ * (Stripe, Evil Martians, Linear). Every semantic colour has FOUR values: light, dark, light + increased
+ * contrast, dark + increased contrast (Apple HIG Color; Adopting Liquid Glass).
+ * Contrast of the documented pairs was computed OKLCH → sRGB (clipped) → WCAG 2.2 relative luminance on
+ * 2026-10-18 (worse of gamut clip vs chroma reduction for out-of-gamut colours); ratios in comments are
+ * floored to one decimal. Re-run an OKLCH → sRGB → WCAG check after changing any colour value.
+ */
+
+/* ---------- Primitives ---------- */
+:root {
+  /* Neutral ramp (very low chroma, cool hue) */
+  --p-gray-0:   oklch(1     0     0);
+  --p-gray-50:  oklch(0.985 0.002 260);
+  --p-gray-100: oklch(0.967 0.003 260);
+  --p-gray-150: oklch(0.945 0.004 260);
+  --p-gray-200: oklch(0.92  0.005 260);
+  --p-gray-300: oklch(0.87  0.006 260);
+  --p-gray-400: oklch(0.71  0.008 260);
+  --p-gray-500: oklch(0.62  0.010 260);
+  --p-gray-600: oklch(0.515 0.012 260);
+  --p-gray-700: oklch(0.44  0.012 260);
+  --p-gray-800: oklch(0.32  0.010 260);
+  --p-gray-850: oklch(0.255 0.008 260);
+  --p-gray-900: oklch(0.21  0.007 260);
+  --p-gray-950: oklch(0.165 0.006 260);
+  --p-gray-1000:oklch(0.13  0.005 260);
+
+  /* Accent ramp (one brand hue; swap H to rebrand, then re-run the contrast check) */
+  --p-accent-h: 258;
+  --p-accent-100: oklch(0.95 0.03  var(--p-accent-h));
+  --p-accent-200: oklch(0.90 0.06  var(--p-accent-h));
+  --p-accent-400: oklch(0.70 0.14  var(--p-accent-h));
+  --p-accent-500: oklch(0.62 0.18  var(--p-accent-h));
+  --p-accent-600: oklch(0.53 0.20  var(--p-accent-h));
+  --p-accent-700: oklch(0.46 0.19  var(--p-accent-h));
+  --p-accent-800: oklch(0.40 0.17  var(--p-accent-h));
+
+  /* Status hues (same lightness curve) */
+  --p-red-600:    oklch(0.53 0.19 27);
+  --p-red-700:    oklch(0.46 0.17 27);
+  --p-red-100:    oklch(0.95 0.03 27);
+  --p-green-600:  oklch(0.50 0.13 150);
+  --p-green-700:  oklch(0.43 0.11 150);
+  --p-green-100:  oklch(0.95 0.04 150);
+  --p-amber-700:  oklch(0.50 0.11 70);
+  --p-amber-800:  oklch(0.43 0.09 70);
+  --p-amber-100:  oklch(0.95 0.05 85);
+  --p-blue-600:   oklch(0.51 0.15 245);
+  --p-blue-700:   oklch(0.46 0.13 245);
+  --p-blue-100:   oklch(0.95 0.03 245);
+}
+
+/* ---------- Semantic: light (default) ---------- */
+:root, [data-theme="light"] {
+  color-scheme: light;
+
+  --color-bg-app:            var(--p-gray-50);
+  --color-bg-surface:        var(--p-gray-0);
+  --color-bg-surface-raised: var(--p-gray-0);
+  --color-bg-subtle:         var(--p-gray-100);
+  --color-bg-hover:          var(--p-gray-150);
+  --color-bg-active:         var(--p-gray-200);
+  --color-bg-selected:       var(--p-accent-100);
+  --color-bg-glass:          color-mix(in oklch, var(--p-gray-0) 72%, transparent);  /* floating chrome only */
+
+  --color-text-primary:   var(--p-gray-950);  /* 19.2:1 on white, 18.4:1 on gray-50 */
+  --color-text-secondary: var(--p-gray-700);  /* 7.7:1 on white, 7.0:1 on gray-100 */
+  --color-text-tertiary:  var(--p-gray-600);  /* 5.6:1 on white, 5.1:1 on gray-100, 4.7:1 on gray-150 */
+  --color-text-disabled:  var(--p-gray-400);  /* disabled only (contrast-exempt), still legible */
+  --color-text-on-accent: var(--p-gray-0);    /* white on accent-600: 5.4:1; on accent-700: 7.2:1 */
+  --color-text-on-danger: var(--p-gray-0);    /* white on red-600: 5.8:1 */
+  --color-text-link:      var(--p-accent-600);/* 5.4:1 on white, 4.9:1 on gray-100 */
+
+  --color-border-subtle:  var(--p-gray-200);  /* dividers / decorative only (not a control boundary) */
+  --color-border-control: var(--p-gray-500);  /* 3.6:1 on white, 3.4:1 on gray-50, 3.3:1 on gray-100 (WCAG 1.4.11) */
+  --color-border-strong:  var(--p-gray-700);
+
+  --color-accent:        var(--p-accent-600);
+  --color-accent-hover:  var(--p-accent-700);
+  --color-accent-subtle: var(--p-accent-100);
+  --color-focus-ring:    var(--p-accent-600);  /* 5.4:1 vs white, 5.2:1 vs gray-50 */
+
+  --color-danger:  var(--p-red-600);   --color-danger-subtle:  var(--p-red-100);   /* text 5.8:1 on white, 4.9:1 on red-100 */
+  --color-success: var(--p-green-600); --color-success-subtle: var(--p-green-100); /* text 5.6:1 on white, 4.9:1 on green-100 */
+  --color-warning: var(--p-amber-700); --color-warning-subtle: var(--p-amber-100); /* text 6.1:1 on white, 5.3:1 on amber-100 */
+  --color-info:    var(--p-blue-600);  --color-info-subtle:    var(--p-blue-100);  /* text 5.5:1 on white, 4.8:1 on blue-100 */
+
+  --shadow-color: 260 12% 25%;  /* H S L triplet, tint shadows to the surface (Comeau) */
+}
+
+/* ---------- Semantic: dark ---------- */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-bg-app:            var(--p-gray-1000);
+  --color-bg-surface:        var(--p-gray-950);
+  --color-bg-surface-raised: var(--p-gray-900);   /* raised = lighter in dark mode (Apple "elevated") */
+  --color-bg-subtle:         var(--p-gray-900);
+  --color-bg-hover:          var(--p-gray-850);
+  --color-bg-active:         var(--p-gray-800);
+  --color-bg-selected:       oklch(0.30 0.07 var(--p-accent-h));
+  --color-bg-glass:          color-mix(in oklch, var(--p-gray-900) 72%, transparent);
+
+  --color-text-primary:   oklch(0.96 0.003 260);  /* 17.1:1 on gray-950; not pure white for long reading */
+  --color-text-secondary: oklch(0.78 0.008 260);  /* 9.6:1 on gray-950, 8.8:1 on gray-900 (≥ 7:1 target) */
+  --color-text-tertiary:  oklch(0.68 0.010 260);  /* 6.6:1 on gray-950, 6.1:1 on gray-900, 5.4:1 on gray-850 */
+  --color-text-disabled:  oklch(0.50 0.010 260);
+  --color-text-on-accent: var(--p-gray-1000);     /* on accent-400: 7.4:1; on accent-hover: 9.3:1 */
+  --color-text-on-danger: var(--p-gray-1000);     /* on danger (0.70 L): 6.9:1. White would be 2.8:1 and fail */
+  --color-text-link:      var(--p-accent-400);    /* 7.1:1 on gray-950, 6.5:1 on gray-900 */
+
+  --color-border-subtle:  oklch(0.30 0.008 260);
+  --color-border-control: oklch(0.52 0.010 260);  /* 3.4:1 on gray-950, 3.6:1 on gray-1000, 3.2:1 on gray-900 */
+  --color-border-strong:  oklch(0.66 0.010 260);
+
+  --color-accent:        var(--p-accent-400);
+  --color-accent-hover:  oklch(0.76 0.12 var(--p-accent-h));
+  --color-accent-subtle: oklch(0.30 0.07 var(--p-accent-h));
+  --color-focus-ring:    var(--p-accent-400);     /* 7.1:1 vs gray-950 */
+
+  --color-danger:  oklch(0.70 0.17 27);  --color-danger-subtle:  oklch(0.30 0.08 27);   /* text 6.6:1 on gray-950 */
+  --color-success: oklch(0.72 0.14 150); --color-success-subtle: oklch(0.30 0.06 150);  /* text 8.2:1 on gray-950 */
+  --color-warning: oklch(0.80 0.13 80);  --color-warning-subtle: oklch(0.32 0.06 80);   /* text 10.1:1 on gray-950 */
+  --color-info:    oklch(0.72 0.12 245); --color-info-subtle:    oklch(0.30 0.06 245);  /* text 7.8:1 on gray-950 */
+
+  --shadow-color: 260 30% 2%;
+}
+
+/* Follow the OS by default; [data-theme="light"|"dark"] only when the user picked one (System / Light / Dark). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --color-bg-app:            var(--p-gray-1000);
+    --color-bg-surface:        var(--p-gray-950);
+    --color-bg-surface-raised: var(--p-gray-900);
+    --color-bg-subtle:         var(--p-gray-900);
+    --color-bg-hover:          var(--p-gray-850);
+    --color-bg-active:         var(--p-gray-800);
+    --color-bg-selected:       oklch(0.30 0.07 var(--p-accent-h));
+    --color-bg-glass:          color-mix(in oklch, var(--p-gray-900) 72%, transparent);
+
+    --color-text-primary:   oklch(0.96 0.003 260);
+    --color-text-secondary: oklch(0.78 0.008 260);
+    --color-text-tertiary:  oklch(0.68 0.010 260);
+    --color-text-disabled:  oklch(0.50 0.010 260);
+    --color-text-on-accent: var(--p-gray-1000);
+    --color-text-on-danger: var(--p-gray-1000);
+    --color-text-link:      var(--p-accent-400);
+
+    --color-border-subtle:  oklch(0.30 0.008 260);
+    --color-border-control: oklch(0.52 0.010 260);
+    --color-border-strong:  oklch(0.66 0.010 260);
+
+    --color-accent:        var(--p-accent-400);
+    --color-accent-hover:  oklch(0.76 0.12 var(--p-accent-h));
+    --color-accent-subtle: oklch(0.30 0.07 var(--p-accent-h));
+    --color-focus-ring:    var(--p-accent-400);
+
+    --color-danger:  oklch(0.70 0.17 27);  --color-danger-subtle:  oklch(0.30 0.08 27);
+    --color-success: oklch(0.72 0.14 150); --color-success-subtle: oklch(0.30 0.06 150);
+    --color-warning: oklch(0.80 0.13 80);  --color-warning-subtle: oklch(0.32 0.06 80);
+    --color-info:    oklch(0.72 0.12 245); --color-info-subtle:    oklch(0.30 0.06 245);
+
+    --shadow-color: 260 30% 2%;
+  }
+}
+
+/* ---------- Increased contrast (values 3 and 4 of the four-value rule) ----------
+ * prefers-contrast: more → darker text in light, lighter text in dark, control-strength borders,
+ * near-opaque glass (Apple HIG Color, Dark Mode; Linear "make text darker in light, lighter in dark").
+ */
+@media (prefers-contrast: more) {
+  :root, [data-theme="light"] {
+    --color-bg-glass:       color-mix(in oklch, var(--p-gray-0) 94%, transparent);
+    --color-text-primary:   var(--p-gray-1000); /* 20.1:1 on white */
+    --color-text-secondary: var(--p-gray-800);  /* 12.6:1 on white, 11.5:1 on gray-100 */
+    --color-text-tertiary:  var(--p-gray-700);  /* 7.7:1 on white, 7.0:1 on gray-100 */
+    --color-text-link:      var(--p-accent-700);/* 7.2:1 on white */
+    --color-border-subtle:  var(--p-gray-500);  /* dividers become real boundaries: 3.6:1 */
+    --color-border-control: var(--p-gray-700);  /* 7.7:1 on white */
+    --color-border-strong:  var(--p-gray-800);
+    --color-accent:         var(--p-accent-700);/* white on it: 7.2:1 */
+    --color-accent-hover:   var(--p-accent-800);
+    --color-focus-ring:     var(--p-accent-700);
+    --color-danger:  var(--p-red-700);    /* 7.7:1 on white; white on it 7.7:1 */
+    --color-success: var(--p-green-700);  /* 7.7:1 on white */
+    --color-warning: var(--p-amber-800);  /* 8.2:1 on white */
+    --color-info:    var(--p-blue-700);   /* 6.9:1 on white */
+  }
+  [data-theme="dark"] {
+    --color-bg-glass:       color-mix(in oklch, var(--p-gray-900) 94%, transparent);
+    --color-text-primary:   oklch(0.99 0.002 260);  /* 18.7:1 on gray-950 */
+    --color-text-secondary: oklch(0.88 0.006 260);  /* 13.4:1 on gray-950 */
+    --color-text-tertiary:  oklch(0.80 0.008 260);  /* 10.3:1 on gray-950, 9.4:1 on gray-900 */
+    --color-text-link:      oklch(0.80 0.11 var(--p-accent-h));  /* 10.2:1 on gray-950 */
+    --color-border-subtle:  oklch(0.52 0.010 260);  /* 3.4:1 on gray-950 */
+    --color-border-control: oklch(0.70 0.010 260);  /* 7.2:1 on gray-950 */
+    --color-border-strong:  oklch(0.80 0.008 260);
+    --color-accent:         oklch(0.80 0.11 var(--p-accent-h));  /* gray-1000 on it: 10.6:1 */
+    --color-accent-hover:   oklch(0.86 0.08 var(--p-accent-h));
+    --color-focus-ring:     oklch(0.80 0.11 var(--p-accent-h));
+    --color-danger:  oklch(0.78 0.13 27);   /* 9.1:1 on gray-950 */
+    --color-success: oklch(0.80 0.12 150);  /* 10.7:1 on gray-950 */
+    --color-warning: oklch(0.86 0.11 85);   /* 12.5:1 on gray-950 */
+    --color-info:    oklch(0.80 0.10 245);  /* 10.4:1 on gray-950 */
+  }
+}
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg-glass:       color-mix(in oklch, var(--p-gray-900) 94%, transparent);
+    --color-text-primary:   oklch(0.99 0.002 260);
+    --color-text-secondary: oklch(0.88 0.006 260);
+    --color-text-tertiary:  oklch(0.80 0.008 260);
+    --color-text-link:      oklch(0.80 0.11 var(--p-accent-h));
+    --color-border-subtle:  oklch(0.52 0.010 260);
+    --color-border-control: oklch(0.70 0.010 260);
+    --color-border-strong:  oklch(0.80 0.008 260);
+    --color-accent:         oklch(0.80 0.11 var(--p-accent-h));
+    --color-accent-hover:   oklch(0.86 0.08 var(--p-accent-h));
+    --color-focus-ring:     oklch(0.80 0.11 var(--p-accent-h));
+    --color-danger:  oklch(0.78 0.13 27);
+    --color-success: oklch(0.80 0.12 150);
+    --color-warning: oklch(0.86 0.11 85);
+    --color-info:    oklch(0.80 0.10 245);
+  }
+}
+
+/* ---------- Space, size, type, shape, depth, motion ---------- */
+:root {
+  /* Spacing: 4px base, small non-linear scale. Use ONLY these. */
+  --space-0-5: 2px; --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px;
+  --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-24: 96px;
+
+  /* Control heights. Touch: ≥ 44 (Apple default 44pt) / 48 (Material). Pointer: Apple macOS default 28pt, min 20pt. */
+  --control-sm: 28px; --control-md: 36px; --control-lg: 44px;
+
+  /* Typography. Never ship SF Pro/SF Symbols files in a web app (Apple licence); system-ui reaches SF on Apple devices. */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Inter Display", var(--font-sans);
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+
+  --text-xs: 12px; --text-sm: 13px; --text-md: 14px; --text-base: 16px; --text-lg: 18px;   /* nothing below 11px; body ≥ 12px even when dense */
+  --text-xl: 20px; --text-2xl: 24px; --text-3xl: 30px; --text-4xl: 36px; --text-5xl: 48px;
+  --leading-tight: 1.2; --leading-snug: 1.35; --leading-normal: 1.5;   /* tight only for 1–2 line headings/labels */
+  /* Tracking for Inter-like faces (general practice, NOT Apple's SF table): tighten as size grows [synth] */
+  --tracking-display-xl: -0.025em;  /* ≥ 48px */
+  --tracking-display:    -0.015em;  /* 24–40px */
+  --tracking-body: 0;
+  --tracking-caps: 0.06em;          /* short uppercase labels only */
+  --weight-regular: 400; --weight-medium: 500; --weight-semibold: 600;
+  --measure: 66ch;                  /* body 45–75ch; 40–60ch acceptable in narrow/mobile columns */
+
+  /* Radius: small set; nested = outer − padding (concentric). Material products: use M3's 0/4/8/12/16/20/28/32/48/full. */
+  --radius-xs: 4px; --radius-sm: 6px; --radius-md: 8px; --radius-lg: 12px; --radius-xl: 16px; --radius-full: 9999px;
+
+  /* Elevation: one light source, layered, tinted (Comeau, Vercel) */
+  --elev-1: 0 1px 1px hsl(var(--shadow-color) / 0.06), 0 1px 2px hsl(var(--shadow-color) / 0.06);
+  --elev-2: 0 1px 2px hsl(var(--shadow-color) / 0.07), 0 2px 4px hsl(var(--shadow-color) / 0.07), 0 4px 8px hsl(var(--shadow-color) / 0.07);
+  --elev-3: 0 1px 2px hsl(var(--shadow-color) / 0.06), 0 2px 4px hsl(var(--shadow-color) / 0.06), 0 4px 8px hsl(var(--shadow-color) / 0.06),
+            0 8px 16px hsl(var(--shadow-color) / 0.06), 0 16px 32px hsl(var(--shadow-color) / 0.06);
+  --scrim: rgb(0 0 0 / 0.32);        /* modal scrim (M3 Elevation: scrim at 32%) */
+  --scrim-media: rgb(0 0 0 / 0.35);  /* dim bright photo/video under clear glass or overlaid text (Apple HIG Materials) */
+  --glass-blur: blur(20px) saturate(180%);   /* floating chrome only (Apple via Emil) */
+
+  /* Motion: curves are Emil Kowalski's published values (drawer curve from Ionic). Durations per decisions:
+   * frequent micro 100–200ms · menus/popovers/modals 150–250ms · large surfaces travelling far up to 500ms ·
+   * toasts ~400ms. Anything seen 100+/day: no animation. */
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);    /* enter / exit */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);   /* on-screen movement / morph */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);    /* drawers, sheets (iOS-like) */
+  --dur-press: 160ms; --dur-tooltip: 125ms; --dur-popover: 200ms; --dur-modal: 250ms;
+  --dur-toast: 400ms; --dur-drawer: 500ms;           /* large surfaces only */
+  --dur-micro: 120ms; --dur-standard: 200ms; --dur-large: 260ms;  /* generic aliases kept for compatibility */
+  --stagger: 50ms;                                   /* 30–80ms per item; never blocks input */
+  /* Motion amounts as tokens so reduced motion can neutralise them without killing fades */
+  --scale-press: 0.97; --scale-enter-popover: 0.95; --scale-enter-modal: 0.96; --scale-enter-tooltip: 0.97;
+  --offset-enter: 8px;               /* stagger / small slide-ins */
+  --offset-sheet: 100%;              /* drawers and sheets travel their own size */
+
+  /* Z-index tied to elevation */
+  --z-dropdown: 100; --z-sticky: 200; --z-overlay: 300; --z-dialog: 400; --z-toast: 500;
+}
+
+/* Material 3 alignment (opt-in, only on Material-based products): layout margins and state layers.
+ * Breakpoints are literal in media queries: 600 / 840 / 1200 / 1600px (M3 Breakpoints; M3 States; M3 Elevation). */
+:root {
+  --layout-margin: 16px;  /* < 600px */
+  --pane-gap: 24px;
+  --state-hover: 0.08; --state-focus: 0.10; --state-pressed: 0.10; --state-dragged: 0.16;
+  --state-disabled-content: 0.38;
+}
+@media (width >= 600px) { :root { --layout-margin: 24px; } }
+
+/* ---------- User preferences ---------- */
+/* Reduced motion: remove travel, scale and blur; KEEP short opacity/colour fades so state changes still read
+ * (Apple Reduced Motion criteria: "dissolve, highlight fade, or color shift"; Emil: "fewer and gentler, not zero"). */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --scale-press: 1; --scale-enter-popover: 1; --scale-enter-modal: 1; --scale-enter-tooltip: 1;
+    --offset-enter: 0px; --offset-sheet: 0px; --stagger: 0ms;
+    --dur-drawer: 200ms; --dur-toast: 200ms;
+  }
+  html { scroll-behavior: auto; }
+  /* Decorative loops (shimmer, parallax, auto-advance) opt in with data-motion="decorative" and stop here.
+   * Spinners and progress are meaningful; leave them running. */
+  [data-motion="decorative"], [data-motion="decorative"]::before, [data-motion="decorative"]::after { animation: none !important; }
+}
+
+/* ---------- Base ---------- */
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: var(--header-height, 0px); }
+body {
+  margin: 0; min-height: 100dvh;
+  font-family: var(--font-sans); font-size: var(--text-base); line-height: var(--leading-normal);
+  color: var(--color-text-primary); background: var(--color-bg-app);
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+h1, h2, h3 { line-height: var(--leading-tight); letter-spacing: var(--tracking-display); font-weight: var(--weight-semibold); text-wrap: balance; }
+p { max-width: var(--measure); text-wrap: pretty; }
+img, svg, video { display: block; max-width: 100%; height: auto; }
+:where(button, input, select, textarea) { font: inherit; color: inherit; }
+.num, td.num, [data-numeric] { font-variant-numeric: tabular-nums; }
+.caps { text-transform: uppercase; letter-spacing: var(--tracking-caps); font-size: var(--text-xs); font-weight: var(--weight-medium); }
+
+/* Focus: visible, ≥2px, ≥3:1, survives forced colours (Soueidan, WCAG 2.4.7/2.4.11) */
+:focus-visible { outline: 2px solid var(--color-focus-ring); outline-offset: 2px; }
+@media (forced-colors: active) { :focus-visible { outline-color: Highlight; } }
+
+/* Hover only where a precise pointer can hover (Emil mobile-native); style items, not containers (M3 States) */
+@media (hover: hover) and (pointer: fine) { .interactive:hover { background: var(--color-bg-hover); } }
+
+/* ---------- Example component: Button ---------- */
+.btn {
+  --btn-bg: var(--color-bg-surface); --btn-fg: var(--color-text-primary); --btn-border: var(--color-border-control);
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  min-height: var(--control-md); padding-inline: var(--space-3); padding-block: 0;
+  border-radius: var(--radius-md); border: 1px solid var(--btn-border);
+  background: var(--btn-bg); color: var(--btn-fg);
+  font-size: var(--text-md); font-weight: var(--weight-medium); line-height: 1; white-space: nowrap;
+  cursor: pointer; user-select: none; touch-action: manipulation;
+  transition: background-color var(--dur-micro) ease, transform var(--dur-press) var(--ease-out);
+}
+.btn:active { transform: scale(var(--scale-press)); }
+.btn[data-variant="primary"] { --btn-bg: var(--color-accent); --btn-fg: var(--color-text-on-accent); --btn-border: transparent; }
+.btn[data-variant="ghost"]   { --btn-bg: transparent; --btn-border: transparent; }
+.btn[data-variant="danger"]  { --btn-bg: var(--color-danger); --btn-fg: var(--color-text-on-danger); --btn-border: transparent; }
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover { background: oklch(from var(--btn-bg) calc(l - 0.04) c h); }
+  .btn[data-variant="ghost"]:hover { background: var(--color-bg-hover); }
+}
+/* Disabled: no pointer-events:none, so the reason tooltip still works */
+.btn[aria-disabled="true"], .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn svg { flex-shrink: 0; width: 16px; height: 16px; }
+@media (pointer: coarse) { .btn { min-height: var(--control-lg); } }
+
+/* Input */
+.input {
+  min-height: var(--control-md); padding-inline: var(--space-3); width: 100%;
+  border: 1px solid var(--color-border-control); border-radius: var(--radius-md);
+  background: var(--color-bg-surface); color: var(--color-text-primary);
+}
+.input::placeholder { color: var(--color-text-tertiary); }
+.input[aria-invalid="true"] { border-color: var(--color-danger); }
+@media (pointer: coarse) { .input { min-height: var(--control-lg); font-size: max(16px, 1em); } }  /* ≥16px: no iOS zoom */
+
+/* Card: nested radius = outer − padding */
+.card { --pad: var(--space-4); padding: var(--pad); border-radius: var(--radius-lg); background: var(--color-bg-surface);
+        border: 1px solid var(--color-border-subtle); }
+.card > .card-media { border-radius: max(calc(var(--radius-lg) - var(--pad)), var(--radius-xs)); }
+
+/* Popover: from the trigger origin; fades only under reduced motion because the scale token becomes 1 */
+.popover {
+  border-radius: var(--radius-lg); box-shadow: var(--elev-2); background: var(--color-bg-surface-raised);
+  transform-origin: var(--transform-origin, var(--radix-popover-content-transform-origin, top center));
+  transition: opacity var(--dur-popover) var(--ease-out), transform var(--dur-popover) var(--ease-out);
+}
+.popover[data-state="closed"] { opacity: 0; transform: scale(var(--scale-enter-popover)); }
+
+/* Dialog: centred origin, 250ms from scale(0.96); scrim fades with it */
+.dialog {
+  border-radius: var(--radius-xl); box-shadow: var(--elev-3); background: var(--color-bg-surface-raised);
+  transition: opacity var(--dur-modal) var(--ease-out), transform var(--dur-modal) var(--ease-out);
+}
+.dialog[data-state="closed"] { opacity: 0; transform: scale(var(--scale-enter-modal)); }
+.dialog-scrim { background: var(--scrim); transition: opacity var(--dur-modal) var(--ease-out); }
+
+/* Sheet/drawer: large surface, travels its own height on the drawer curve; fades in place under reduced motion */
+.sheet {
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0; background: var(--color-bg-surface-raised);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  transition: transform var(--dur-drawer) var(--ease-drawer), opacity var(--dur-drawer) var(--ease-out);
+}
+.sheet[data-state="closed"] { transform: translateY(var(--offset-sheet)); opacity: 0; }
+
+/* Glass: floating chrome only (nav, toolbar, sheet header), never content cards (Apple HIG Materials) */
+.glass {
+  background: var(--color-bg-glass); border: 1px solid transparent;
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+}
+/* Scroll-edge fade instead of an opaque slab + divider under a sticky header (Apple HIG Layout).
+ * Add .is-scrolled (IntersectionObserver on a top sentinel) so the fade appears only when content is underneath. */
+.scroll-region.is-scrolled { mask-image: linear-gradient(to bottom, transparent 0, #000 var(--space-6)); }
+
+/* ---------- Preference overrides for components (kept last so they win the cascade) ---------- */
+/* Reduced transparency: glass becomes an opaque surface, no blur (Apple HIG Materials; Apple via Emil). */
+@media (prefers-reduced-transparency: reduce) {
+  .glass { background: var(--color-bg-surface-raised); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass { background: var(--color-bg-surface-raised); }
+}
+/* Increased contrast: translucent chrome gets a solid outline (Linear iOS, Apple via Emil). */
+@media (prefers-contrast: more) {
+  .glass { border-color: var(--color-border-control); }
+  .card, .popover, .dialog { border: 1px solid var(--color-border-control); }
+}

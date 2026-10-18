@@ -1,0 +1,225 @@
+---
+version: alpha
+name: <Product> design system
+description: "<One paragraph: personality (e.g. calm, precise, dense), audience and frequency of use, light/dark (follows the OS by default), the one accent and where it is allowed.>"
+# Optional: list sections you deliberately leave undefined, with a reason
+# omitted:
+#   - section: components
+#     reason: "Using shadcn/ui defaults; see Components prose"
+colors:
+  primary: "#2563eb"              # the ONE interactive accent: primary action, links, selection, focus ring. 5.2:1 on surface
+  on-primary: "#ffffff"
+  primary-hover: "#1d4ed8"
+  neutral: "#ffffff"              # page background (light)
+  surface: "#ffffff"
+  surface-raised: "#f7f7f8"
+  on-surface: "#18181b"           # body text, >= 4.5:1 on every light surface (16.5:1 on raised)
+  on-surface-muted: "#52525b"     # secondary text, 7.2:1 on raised
+  border: "#e4e4e7"               # decorative hairline only
+  border-strong: "#8b8b94"        # control boundaries needed to identify a control, >= 3:1 (3.4:1 on white)
+  error: "#b91c1c"
+  on-error: "#ffffff"
+  success: "#15803d"
+  warning: "#a16207"
+  primary-dark: "#60a5fa"         # dark-theme accent, 7.8:1 on surface-dark
+  on-primary-dark: "#0a0a0b"
+  surface-dark: "#0a0a0b"
+  surface-raised-dark: "#17171a"  # raised surfaces get LIGHTER in dark mode
+  on-surface-dark: "#ededef"
+  on-surface-muted-dark: "#a1a1aa" # 7.7:1 on surface-dark (aim 7:1 for custom dark pairs)
+typography:
+  display-lg: { fontFamily: Inter, fontSize: 48px, fontWeight: 600, lineHeight: 1.1, letterSpacing: -0.03em }
+  headline-lg: { fontFamily: Inter, fontSize: 30px, fontWeight: 600, lineHeight: 1.2, letterSpacing: -0.02em }
+  headline-md: { fontFamily: Inter, fontSize: 24px, fontWeight: 600, lineHeight: 1.25, letterSpacing: -0.015em }
+  title: { fontFamily: Inter, fontSize: 18px, fontWeight: 600, lineHeight: 1.35 }
+  body-lg: { fontFamily: Inter, fontSize: 16px, fontWeight: 400, lineHeight: 1.5 }
+  body-md: { fontFamily: Inter, fontSize: 14px, fontWeight: 400, lineHeight: 1.5 }
+  label-md: { fontFamily: Inter, fontSize: 14px, fontWeight: 500, lineHeight: 1.35 }
+  label-sm: { fontFamily: Inter, fontSize: 12px, fontWeight: 500, lineHeight: 1.35 }
+  label-caps: { fontFamily: Inter, fontSize: 12px, fontWeight: 500, lineHeight: 1.35, letterSpacing: 0.06em }
+  numeric: { fontFamily: Inter, fontSize: 14px, fontWeight: 400, lineHeight: 1.5, fontFeature: "\"tnum\" 1" }
+  mono: { fontFamily: "JetBrains Mono", fontSize: 13px, fontWeight: 400, lineHeight: 1.5 }
+rounded:
+  none: 0px
+  sm: 4px      # chips, small inputs
+  md: 8px      # buttons, inputs
+  lg: 12px     # cards, popovers
+  xl: 16px     # dialogs, sheets
+  full: 9999px # pills, avatars
+spacing:
+  "1": 4px
+  "2": 8px
+  "3": 12px
+  "4": 16px
+  "5": 20px
+  "6": 24px
+  "8": 32px
+  "10": 40px
+  "12": 48px
+  "16": 64px
+  "20": 80px
+  "24": 96px
+components:
+  button-primary: { backgroundColor: "{colors.primary}", textColor: "{colors.on-primary}", typography: "{typography.label-md}", rounded: "{rounded.md}", padding: 8px 14px, height: 36px }
+  button-primary-hover: { backgroundColor: "{colors.primary-hover}", textColor: "{colors.on-primary}" }
+  button-secondary: { backgroundColor: "{colors.surface}", textColor: "{colors.on-surface}", typography: "{typography.label-md}", rounded: "{rounded.md}", padding: 8px 14px, height: 36px }
+  button-destructive: { backgroundColor: "{colors.error}", textColor: "{colors.on-error}", typography: "{typography.label-md}", rounded: "{rounded.md}", padding: 8px 14px, height: 36px }
+  input: { backgroundColor: "{colors.surface}", textColor: "{colors.on-surface}", typography: "{typography.body-lg}", rounded: "{rounded.md}", padding: 8px 12px, height: 40px }
+  card: { backgroundColor: "{colors.surface}", textColor: "{colors.on-surface}", rounded: "{rounded.lg}", padding: 24px }
+  dialog: { backgroundColor: "{colors.surface}", textColor: "{colors.on-surface}", rounded: "{rounded.xl}", padding: 24px }
+  page: { backgroundColor: "{colors.neutral}", textColor: "{colors.on-surface}", typography: "{typography.body-lg}" }
+  panel-raised: { backgroundColor: "{colors.surface-raised}", textColor: "{colors.on-surface}", rounded: "{rounded.lg}", padding: 16px }
+  text-secondary: { backgroundColor: "{colors.surface-raised}", textColor: "{colors.on-surface-muted}", typography: "{typography.body-md}" }
+  table-numeric: { backgroundColor: "{colors.surface}", textColor: "{colors.on-surface}", typography: "{typography.numeric}" }
+  code: { backgroundColor: "{colors.surface-raised}", textColor: "{colors.on-surface}", typography: "{typography.mono}", rounded: "{rounded.sm}", padding: 2px 6px }
+  status-success: { backgroundColor: "{colors.surface}", textColor: "{colors.success}", typography: "{typography.label-sm}" }
+  status-warning: { backgroundColor: "{colors.surface}", textColor: "{colors.warning}", typography: "{typography.label-sm}" }
+  status-error: { backgroundColor: "{colors.error}", textColor: "{colors.on-error}", typography: "{typography.label-sm}", rounded: "{rounded.full}", padding: 2px 8px }
+  page-dark: { backgroundColor: "{colors.surface-dark}", textColor: "{colors.on-surface-dark}", typography: "{typography.body-lg}" }
+  panel-raised-dark: { backgroundColor: "{colors.surface-raised-dark}", textColor: "{colors.on-surface-dark}", rounded: "{rounded.lg}", padding: 16px }
+  text-secondary-dark: { backgroundColor: "{colors.surface-dark}", textColor: "{colors.on-surface-muted-dark}", typography: "{typography.body-md}" }
+  button-primary-dark: { backgroundColor: "{colors.primary-dark}", textColor: "{colors.on-primary-dark}", typography: "{typography.label-md}", rounded: "{rounded.md}", padding: 8px 14px, height: 36px }
+---
+
+# <Product> DESIGN.md
+<!-- Source of truth for how this product looks and behaves. Agents: read this before any UI work and update it in the same change when a decision changes. Tokens in the front matter are normative; prose explains why. Its tokens override ui-ux-craft skill defaults.
+Format: Google Labs DESIGN.md spec (alpha). The 8 canonical sections come first, in order; Motion, Accessibility, Voice & Copy, AI states, Iteration Guide and Known Gaps are extensions the spec preserves.
+Validate: npx @google/design.md lint DESIGN.md   (expect 0 errors; border/border-strong may show as orphaned-tokens warnings because the spec has no borderColor property)
+Export:   npx @google/design.md export --format css-tailwind DESIGN.md -->
+
+## Overview
+<2–4 sentences: who uses it, how often (daily tool vs occasional), the feeling (calm / precise / playful), density, platforms (web, iOS, Android).>
+
+**Forces this design resolves** (fit before form):
+- <user goal / constraint / edge case / conflicting requirement>
+- <…>
+
+**Key characteristics**
+- One accent (`{colors.primary}`), used only for the primary action, links, selection and focus.
+- Neutral, low-chroma chrome that recedes behind content; colour belongs to content and status.
+- Hierarchy from weight and spacing before size and colour; structure felt, not drawn (few borders).
+- <signature decision 4>
+- <signature decision 5>
+
+## Colors
+- **Primary** (`{colors.primary}`): the single interactive accent. At most one filled primary button per view.
+- **Surface / Surface raised**: page and raised-panel backgrounds. In dark mode, raised surfaces get lighter.
+- **On-surface / On-surface muted**: text. Both ≥ 4.5:1 on every surface they sit on; aim for 7:1 on custom dark pairs.
+- **Border / Border strong**: decorative hairline vs control boundary (≥ 3:1 where the boundary is needed to identify the control or its state, including checked vs unchecked).
+- **Error / Success / Warning**: status only, always paired with an icon or text; never colour alone (must pass a grayscale check).
+- **Theme**: follows the OS by default. If a switch exists: System (default) / Light / Dark. Every custom colour has light, dark, increased-contrast light and increased-contrast dark values: <list or "generated by …">.
+- **Gradients**: none as decoration. <Allowed only as: an established brand asset, or the single AI-state indicator described in "AI states" — delete if not applicable.>
+- Palette source: <OKLCH generator / brand book>. Dark theme: <how generated>.
+
+## Typography
+| Token | Size | Weight | Line height | Tracking | Use |
+|---|---|---|---|---|---|
+| display-lg | 48 | 600 | 1.1 | −0.03em | Marketing hero only |
+| headline-lg | 30 | 600 | 1.2 | −0.02em | Page titles |
+| headline-md | 24 | 600 | 1.25 | −0.015em | Section titles |
+| title | 18 | 600 | 1.35 | 0 | Card/dialog titles |
+| body-lg | 16 | 400 | 1.5 | 0 | Default body, inputs (16px avoids iOS input zoom) |
+| body-md | 14 | 400 | 1.5 | 0 | Dense UI body |
+| label-md / label-sm | 14 / 12 | 500 | 1.35 | 0 | Buttons, labels, meta |
+| label-caps | 12 | 500 | 1.35 | +0.06em | Short uppercase labels only |
+| numeric | 14 | 400 | 1.5 | 0 | Tables, prices, timers (`tnum`) |
+| mono | 13 | 400 | 1.5 | 0 | Code, IDs |
+
+Principles: ≤ 3 sizes in a simple view; weights 400/500/600 (never below 400 for UI text); tracking tightens as size grows (tune per font; don't copy SF Pro's table); body measure 45–75 characters (aim ~66; 40–60 on narrow columns); body line-height 1.4–1.6, tighter only for headings and labels; numerals in UI; case convention: <sentence case (web) | HIG title case for native Apple buttons, menus and section headers>. Type scales with `rem` and survives 200% text.
+Font substitutes: <proprietary → open fallback>. Don't ship SF fonts or SF Symbols in a web app.
+
+## Layout
+- 4px base; only scale values (front matter `spacing`). Space inside a group < space between groups. Padding inside, `gap` between children.
+- Container: <max width, e.g. 1200px>; app shell: <fixed sidebar + fluid content>; buttons, inputs and forms never stretch full width on wide screens.
+- Breakpoints (layout follows available space, never device type; functionality is identical at every size):
+
+| Name | Width | Key changes |
+|---|---|---|
+| compact | < 600 | single column; 16px margins; bottom actions use safe-area insets; bottom sheets instead of popovers |
+| medium | 600–839 | 24px margins; nav rail or collapsible sidebar; 1 pane (2 only for low-density content) |
+| expanded | 840–1199 | 2 panes, 24px gutter; visible primary nav (no hamburger) |
+| large | ≥ 1200 | fixed side pane ~360–412px; up to 3 panes at ≥ 1600 |
+
+- Touch targets ≥ 44×44 (48×48 on Material) on touch, ≥ 24×24 on pointer; hit area may exceed the visual. Mobile web baseline: `viewport-fit=cover`, never disable zoom, `100dvh` shells / `100svh` heroes, hover styles behind `(hover: hover) and (pointer: fine)`.
+
+## Elevation & Depth
+| Level | Treatment | Use |
+|---|---|---|
+| 0 | flat; group with spacing | default |
+| 1 | inset 1px `{colors.border}` ring, or `surface-raised` | cards, panels |
+| 2 | ring + 2 stacked low-alpha shadows (tinted to surface hue) | popovers, menus |
+| 3 | ring + 3 stacked shadows + scrim | dialogs, sheets |
+
+### Shadow tokens
+<!-- The spec has no shadow tokens; values live here. Mirror them as CSS custom properties. One light source (top), shadows tinted to the surface hue, never pure grey halos. -->
+| Token | Value (light) | Use |
+|---|---|---|
+| shadow-1 | `0 1px 2px rgb(24 24 27 / 0.06)` | resting raised card (optional; prefer the ring) |
+| shadow-2 | `0 1px 2px rgb(24 24 27 / 0.06), 0 4px 12px rgb(24 24 27 / 0.08)` | popovers, menus |
+| shadow-3 | `0 2px 4px rgb(24 24 27 / 0.06), 0 8px 24px rgb(24 24 27 / 0.10), 0 24px 48px rgb(24 24 27 / 0.12)` | dialogs |
+| scrim | `rgb(0 0 0 / 0.32)` | behind modal dialogs and sheets |
+
+Dark mode: lighter surface steps + hairlines instead of shadows. Never border + heavy shadow + background shift together. Translucency (`backdrop-filter`) only on floating chrome, never glass on glass and never on content cards; solid under `prefers-reduced-transparency`, solid + outline under `prefers-contrast: more`.
+
+## Shapes
+Radius set: sm 4 · md 8 · lg 12 · xl 16 · full. Nested radius = outer − padding (concentric). One CTA radius grammar per screen (<pills | rounded rectangles>). No large or pill radii on dense data cards. Icons: <one family>, <stroke> stroke, sized to drawn size, weight matched to adjacent text; outline at rest, filled for selected; no emoji as icons; standard metaphors for share, search, delete; the ellipsis only for overflow.
+
+## Components
+For each component list: variants, sizes, and ALL states (default, hover, active/pressed, focus-visible, disabled-with-reason, loading, selected, error), plus the library or primitive it builds on. New state = new sibling key in the front matter (`-hover`, `-active`, `-disabled`).
+- **Button**: primary (one per view) / secondary / tertiary (link-style) / destructive (styled destructive but never the Enter default; focus the least destructive option). Label = outcome verb + object. Loading keeps label width and blocks resubmit. Press `scale(0.97)`. Disabled buttons explain why and never use `pointer-events: none`.
+- **Input**: persistent visible label above, hint below the label, error text tied to the field; ≥ 16px text on touch; correct `type`/`inputmode`/`autocomplete`/`enterkeyhint`. Validate on submit, then live once a field has errored.
+- **Card**, **Dialog** (one layer at a time; dirty dialogs offer Save/Discard on every dismissal), **Menu/Popover** (from trigger origin; bottom sheet on compact), **Toast** (<library>; polite live region; actionable toasts don't auto-dismiss), **Table** (tabular numerals, sticky header, never truncate numbers), **Empty state** (what + why + next action).
+- Library: <shadcn/ui | Radix | Base UI | platform components>.
+
+## Do's and Don'ts
+- Do use `{colors.primary}` only for the single most important action per view, links, selection and focus.
+- Do build every data view's ideal, empty, loading, partial and error states, and test them with worst-case data.
+- Do keep text ≥ 4.5:1 (3:1 only for ≥ 24px or ≥ 18.66px bold), identifying UI boundaries and focus ≥ 3:1, in light, dark and increased-contrast modes.
+- Do give every gesture and hover action a visible control alternative.
+- Don't add a second accent colour to chrome or put brand colour on every control.
+- Don't use more than 3 font weights, or weights below 400 for UI text.
+- Don't mix pill and rectangular buttons in one view.
+- Don't use gradients, glow or glass as decoration or on content cards.
+- Don't animate keyboard-initiated or 100+/day actions.
+
+## Motion
+| Token | Value | Use |
+|---|---|---|
+| ease-out | cubic-bezier(0.23, 1, 0.32, 1) | enter/exit (default) |
+| ease-in-out | cubic-bezier(0.77, 0, 0.175, 1) | on-screen movement, morphing |
+| ease-drawer | cubic-bezier(0.32, 0.72, 0, 1) | drawers/sheets |
+| press | 160ms | `:active` scale 0.97 |
+| micro | 100–200ms | hover colour, toggles, small state changes |
+| tooltip | 125ms | after the first opens, instant |
+| dropdown / popover | 150–250ms | from trigger origin, start at scale 0.95 + opacity 0 |
+| modal | 200–250ms | centred, scale 0.96 |
+| toast-enter | ~400ms | `ease`; exits faster |
+| drawer / sheet | up to ~500ms | ease-drawer; large surfaces travelling far |
+
+Rules: frequency gate (no animation for keyboard-initiated or 100+/day actions; reduce for tens/day); a stated purpose for every animation; transform and opacity only; never `scale(0)`; no `ease-in` on UI; exits faster than entrances; interruptible (transitions, not keyframes, for UI that can reverse); hover motion behind `(hover: hover) and (pointer: fine)`. **Reduced motion**: remove decorative and ongoing motion (parallax, auto-advance, spin, animated blur); replace meaningful motion with a fade, highlight or colour change; never blanket-kill feedback. Key moments are documented as named phases with their parameters: <phase list>.
+
+## Accessibility
+- Target: WCAG 2.2 AA; on Apple platforms, the Accessibility Nutrition Label criteria (VoiceOver, Larger Text, Sufficient Contrast, Reduced Motion, Differentiate Without Color Alone) for every main task.
+- Focus ring: 2px solid `{colors.primary}`, 2px offset, `outline` (survives forced colours); two-tone ring on varied surfaces. Focus never obscured by sticky UI; focus returns to the trigger on close; background loads never move focus or reading position.
+- Keyboard map for composite widgets: <toolbar / tabs / menu / listbox / grid: arrow keys within, one tab stop>. Global shortcuts: <⌘K, /, ?, …>.
+- Targets: 24px floor, 44/48px on touch; ~12px clear space around bezeled controls.
+- Supported preferences (honour the OS; in-app settings only if more granular): reduced motion, reduced transparency, increased contrast (`prefers-contrast: more` adds borders), dark mode, forced colours, 200% text (layouts stack, rows grow, no truncation without a path to the full text).
+- Accessible names: concise, item-specific for repeated or destructive actions ("Delete invoice 1042"), never include the role ("button") or state.
+- Testing: main tasks × one setting at a time, then combinations (dark + increased contrast + reduced transparency); keyboard only; screen reader with the screen off; voice control; grayscale; axe in CI. Record pass/fail per task.
+
+## Voice & Copy
+Case: <sentence case | HIG title case on native Apple>. Buttons are outcome verb + object ("Save changes", not "Submit"). Errors say what happened + how to fix, with no "we", blame or "please": "Couldn't save changes. Check your connection and try again." Numerals in UI. Turn on/off, not enable/disable; no "click on", "e.g.", "Oops". Terminology (one name per concept): <noun list>. Fixture names are diverse and plausible; no lorem ipsum.
+
+## AI states
+<!-- Delete this section if the product has no AI features. -->
+AI marker: <one icon> always paired with a verb label ("Summarise"). States and their single treatment: idle · listening · thinking (Stop) · streaming (Stop) · done (Copy, Retry, Edit, Undo, sources) · error (Retry, input kept) · cancelled (partial kept). Gradient/animated indicator: <none | describe; tied to a state, stops when it ends, static + text under reduced motion>. Generated changes are previewed and undoable; consequential actions confirmed.
+
+## Iteration Guide
+1. Change one component at a time; reference tokens by name (`{components.button-primary}`), never inline hex or px.
+2. New state = new sibling component key (`-hover`, `-active`, `-disabled`).
+3. Before adding chrome (border, shadow, colour), try spacing, then a surface step.
+4. For open-ended work, explore 2–3 named directions before converging; record the rejected ones.
+5. Update this file in the same change as the code; run the linter.
+
+## Known Gaps
+<What is undefined, so agents ask instead of inventing, e.g. "No data-viz palette yet", "Dark mode not designed for marketing pages", "No increased-contrast palette yet".>
