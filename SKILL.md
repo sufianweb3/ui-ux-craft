@@ -1,6 +1,6 @@
 ---
 name: ui-ux-craft
-description: Product-design judgment and visual craft for production-grade interfaces (web apps, SaaS, dashboards, marketing pages, mobile web, iOS/macOS/Android UI, AI features) at the level of Apple, Linear, Stripe and Vercel. Use whenever you create, restyle, review, audit or refactor any UI, component, design token, DESIGN.md, layout, form, menu, dialog, animation, empty/loading/error state or UI copy, or when the user says it looks generic or AI-made, feels off, janky or cheap, should feel native on mobile, or asks for options, a stress test or a design review. Encodes published guidance from NN/g, W3C WAI, Apple HIG and WWDC, Material 3 and Android, GOV.UK, Refactoring UI, Butterick, Comeau, Emil Kowalski, Rauno Freiberg, Linear, Figma, Stripe, Vercel and others as rules, numbers, code defaults and a review protocol with a Block/Approve verdict.
+description: Product-design judgment and visual craft for production-grade interfaces (web apps, SaaS, dashboards, marketing pages, mobile web, iOS/macOS/Android UI, AI features) at the level of Apple, Linear, Stripe and Vercel. Use whenever you create, restyle, review, audit or refactor any UI, component, design token, DESIGN.md, layout, form, menu, dialog, animation, empty/loading/error state or UI copy, or when the user says it looks generic or AI-made, feels off, janky or cheap, should feel native on mobile, or asks for options, a stress test or a design review. Also use it to start a new product, site or redesign from scratch: it runs discovery questions, a function map, brand creation (colour, fonts, tokens) and reference gathering from the user or Mobbin, Awwwards and Godly, with approval gates before screens are built. Encodes published guidance from NN/g, W3C WAI, Apple HIG and WWDC, Material 3 and Android, GOV.UK, Refactoring UI, Butterick, Comeau, Emil Kowalski, Rauno Freiberg, Linear, Figma, Stripe, Vercel and others as rules, numbers, code defaults and a review protocol with a Block/Approve verdict.
 ---
 
 # UI/UX Craft
@@ -26,12 +26,19 @@ Garrett's planes: strategy → scope → structure → skeleton → surface. Pol
 - State the user's job, the business goal and the success signal: "users need to ___ so they can ___". If the request is a disguised solution ("add a settings page"), name the need (Torres, Singer).
 - List the **forces** the design must fit (goals, constraints, conflicting needs, habits, edge cases) and judge output against them, not against how polished it looks: "the form is there, the fit is not" (Saarinen, *Output isn't design*).
 - Ask at most 2–3 questions, only where the answer changes the build (audience/density, platform, brand, mood). Asking for the mood ("warm coffee shop" vs "paper and typography") is the cheapest style input (Apple 227). Otherwise state assumptions and proceed.
+- **New product, new site or full redesign:** instead run the batched intake (up to ~10 questions, each with a default) and build the **function map** (every function ranked by frequency and importance) from `references/00-discovery-brand-references.md` §1–2.
 - Write an **Out of scope** list; prefer the smallest change that solves it (Shape Up).
 
 **Step 2: Structure.** Load `references/01-product-thinking.md` beyond a single component.
 - Object model as nouns and verbs; one name per concept in labels, routes and code (Covert). Separate data objects from lenses (views, filters, display options) (Linear).
 - Breadboard places, affordances and connections; prefer an existing place over a new screen (Singer). List every state per view (the wireflow, NN/g).
 - Navigation: visible primary nav, current location shown, no hamburger on desktop (NN/g, Wroblewski).
+- **Gate 1 (new products and redesigns):** present the design brief (`00` §3) and get approval before visual work. Unattended: write assumptions at the top and continue.
+
+**Step 2a: Brand and references (new products and redesigns).** Load `references/00-discovery-brand-references.md` §4–6.
+- Brand guidelines exist: extract them into tokens and contrast-check them; never silently change a brand. None: create a small one (grayscale first, one primary hue, OKLCH ramps, ~60-30-10, at most 2 typefaces chosen for personality).
+- References: the user's first; if none, collect 5–8 from live products, Mobbin/Refero (product UI), Awwwards/Godly/Land-book (marketing). Dribbble is mood only. Study each in words, write **steal** and **avoid** lists, then a 2–3 sentence **direction statement** with **one signature element**.
+- **Gate 2:** present tokens, reference board and direction (plus a style tile if you can render) and get approval before full screens. Explore (2b) then varies layout, density and interaction within that direction.
 
 **Step 2b: Explore (open-ended screens only).** When layout or style is open ("design a dashboard", "make a landing page"), don't ship the first layout you think of: it anchors on an arbitrary structure and invents features nobody asked for (Apple 227).
 - Pin down features and mood, then build **2–3 genuinely different directions (max 5)** on named axes (layout, density, personality, interaction model), each **named for its direction**, not "Option A/B/C". Variants that differ only in accent colour or copy count as one (Emil prototype).
@@ -56,7 +63,7 @@ Decide truncate vs wrap per field (never truncate numbers or dates; always reach
 
 **Step 5: Polish passes**, one concern per pass (Wichary): alignment → spacing rhythm → type hierarchy → colour/contrast → icon consistency → states → motion → copy → responsive/zoom → keyboard. Repeat until a full pass finds nothing (Linear, Emil).
 
-**Step 6: Review.** Load `references/16-review-and-qa.md`. Run the rubric, squint test, self-usability test and keyboard pass. Report a single **Before | After | Why (rule, source)** table, never a "Before:/After:" list, with each finding marked **verified** (rendered or measured) or **inferred from code**. End with **Verdict: Block** (any AA failure, destroyed input, missing empty/error/loading state, animation on a keyboard or high-frequency action, `ease-in`/`scale(0)`, fake data) or **Verdict: Approve** (none of those and every rubric area ≥ 4) (Emil review format).
+**Step 6: Review (Gate 3 for new products and redesigns).** Load `references/16-review-and-qa.md`. Run the rubric, squint test, self-usability test and keyboard pass. Report a single **Before | After | Why (rule, source)** table, never a "Before:/After:" list, with each finding marked **verified** (rendered or measured) or **inferred from code**. End with **Verdict: Block** (any AA failure, destroyed input, missing empty/error/loading state, animation on a keyboard or high-frequency action, `ease-in`/`scale(0)`, fake data) or **Verdict: Approve** (none of those and every rubric area ≥ 4) (Emil review format).
 
 **Step 7: Document.** For non-trivial work write design notes (`assets/design-notes-template.md`): problem, options considered **and rejected**, decision and trade-offs, what's deliberately excluded (NN/g, Soleio). Record lasting decisions in DESIGN.md.
 
@@ -167,6 +174,7 @@ Never ship these unless the user asks:
 
 | Task involves | Load |
 |---|---|
+| New product, site or redesign: intake questions, function map, brand creation, references and direction | `references/00-discovery-brand-references.md` |
 | A new feature, flow, page or app; unclear request; naming | `references/01-product-thinking.md` |
 | Layout, spacing, hierarchy, typography | `references/02-visual-foundations.md` |
 | Colours, palettes, dark mode, theming | `references/03-color-and-theming.md` |

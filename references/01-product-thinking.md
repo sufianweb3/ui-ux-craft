@@ -24,6 +24,8 @@ Use this file before building any feature, page or app, and whenever a request i
 
 If you can't ask, state your assumptions explicitly at the top of your response and proceed.
 
+For a **new product, site or full redesign**, use the batched intake, function map, brand and reference steps in `00-discovery-brand-references.md` instead of this short list.
+
 ## 2. Bound the work (Shape Up)
 
 - **Appetite:** fixed time, variable scope. Decide how much the problem is worth, then design to fit.

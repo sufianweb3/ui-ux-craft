@@ -255,3 +255,13 @@ Apple's HIG pages were read through the machine-readable endpoint `https://devel
 | Emil ask-sonner / animate-expo / write-swift | …/skills/ask-sonner (+ API.md), …/animate-expo (+ RECIPES.md), …/write-swift | Toast recipe (400ms), native motion and haptics; write-swift not integrated | practitioner |
 | Google DESIGN.md spec | DESIGN.md format spec (alpha), Google Labs — https://github.com/google-labs-code/design.md/blob/main/docs/spec.md ; CLI `@google/design.md` 0.4.0 — https://www.npmjs.com/package/@google/design.md | DESIGN.md format: YAML tokens + 8 ordered sections, `{token.refs}`, lint/diff/export | primary (for the format) |
 | awesome-design-md | VoltAgent, awesome-design-md — https://github.com/VoltAgent/awesome-design-md (now redirects to getdesign.md) | Structural ideas only (Key Characteristics, hierarchy tables, Iteration Guide, Known Gaps). **Community/unverified**: brand values are extracted from public CSS, one file has invalid YAML; never cite as brand fact (conflicts #14) | community/unverified |
+
+## Discovery, brand and references (v3)
+- **Types of colour palettes** — Figma resource library — https://www.figma.com/resource-library/types-of-color-palettes/ — palette structures by product type, 60-30-10, grayscale-first. secondary
+- **UI design best practices: 7 principles** — Figma resource library — https://www.figma.com/resource-library/ui-design-principles/ — 60-30-10, progressive disclosure. secondary
+- **Why does a design look good?** — NN/g — https://www.nngroup.com/articles/why-does-design-look-good/ — muted versus saturated colour, grid and base unit first. primary
+- **Visual hierarchy in UX: definition** — NN/g — https://www.nngroup.com/articles/visual-hierarchy-ux-definition/ — define content hierarchy before designing. primary
+- **Principles of visual hierarchy in UI design** — UX Planet — https://uxplanet.org/principles-of-visual-hierarchy-in-ui-design-fbcd31f88088 — size, colour, proximity, whitespace. secondary
+- **Developing Taste** — Emil Kowalski — https://emilkowal.ski/ui/developing-taste — study references by asking why, dissect products. primary
+- **Design principles** — Apple HIG (reintroduced June 2026) — https://developer.apple.com/design/human-interface-guidelines/design-principles — identify the emotion to inspire, delight is not decoration. primary
+- Reference galleries (used as reference sources, not as authorities): Mobbin, Refero, Awwwards, Godly, Land-book, Minimal Gallery, Lapa Ninja, SiteInspire; Dribbble, Behance and Pinterest for mood only. community
